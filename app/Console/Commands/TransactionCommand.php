@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Transaction;
 use App\Services\TransactionService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;

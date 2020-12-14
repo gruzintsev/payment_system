@@ -25,6 +25,11 @@ class TransactionService
         $this->userService = $userService;
     }
 
+    public function updateStatus(Transaction $transaction, int $status)
+    {
+        $transaction->update(['status' => $status]);
+    }
+
     /**
      * @param Collection $filters
      * @return Builder
@@ -120,8 +125,6 @@ class TransactionService
     {
         try {
             DB::transaction(function () use ($transaction) {
-                $transaction->update(['status' => Transaction::STATUS_IN_PROGRESS]);
-
                 $userFrom = $this->userService->getById($transaction->user_from_id);
                 $userTo = $this->userService->getById($transaction->user_to_id);
 

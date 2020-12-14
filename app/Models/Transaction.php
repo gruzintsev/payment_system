@@ -20,13 +20,11 @@ class Transaction extends Model
     use HasFactory;
 
     public const STATUS_NEW = 1;
-    public const STATUS_IN_PROGRESS = 2;
-    public const STATUS_COMPLETE = 3;
-    public const STATUS_FAIL = 4;
+    public const STATUS_COMPLETE = 2;
+    public const STATUS_FAIL = 3;
 
     public static $statusNames =[
         self::STATUS_NEW => 'New',
-        self::STATUS_IN_PROGRESS => 'In progress',
         self::STATUS_COMPLETE => 'Complete',
         self::STATUS_FAIL => 'Fail',
     ];
