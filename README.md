@@ -8,7 +8,7 @@
 Берется первая транзакция из новых (со статусом NEW), отсортированных по дате по возрастанию.
 Создается транзакция БД, в которой выполняются операции, добавления суммы операции к счету получателя, списание со счета
  отправителя, установка статуса в COMPLETE, добавление id транзакции в таблицу last_transactions. Если одна из операций
-не сработает то, все откатывается, статус транзакции устанавливается в FAIL. Таким образом эту
+не сработает то, все откатывается.
 
 Routes
 
@@ -42,6 +42,7 @@ $ cd 'your_projects_directory'
 $ git clone git@github.com:gruzintsev/payment_system.git
 $ cd payment_system
 $ composer install
+$ Настроить .env
 $ ./vendor/bin/sail up -d
 $ sail exec laravel.test php artisan migrate
 $ sail exec laravel.test php artisan db:seed
