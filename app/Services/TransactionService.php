@@ -37,13 +37,15 @@ class TransactionService
     public function getQuery(Collection $filters): Builder
     {
         $query = Transaction::query()
-            ->orWhere('user_from_id', $filters->get('user_id'))
-            ->orWhere('user_to_id', $filters->get('user_id'));
+            ->where(function ($query) use ($filters) {
+                $query->orWhere('transactions.user_from_id', $filters->get('user_id'))
+                    ->orWhere('transactions.user_to_id', $filters->get('user_id'));
+            });
         if ($filters->get('date_from')) {
-            $query->where('created_at', '>=', Carbon::parse(strtotime($filters->get('date_from'))));
+            $query->where('transactions.created_at', '>=', Carbon::parse(strtotime($filters->get('date_from'))));
         }
         if ($filters->get('date_to')) {
-            $query->where('created_at', '<=', Carbon::parse(strtotime($filters->get('date_to'))));
+            $query->where('transactions.created_at', '<=', Carbon::parse(strtotime($filters->get('date_to'))));
         }
         $query->leftJoin('users as u_from', 'u_from.id', '=', 'transactions.user_from_id');
         $query->leftJoin('users as u_to', 'u_to.id', '=', 'transactions.user_to_id');
@@ -66,7 +68,13 @@ class TransactionService
                         ORDER BY cr.date DESC
                         LIMIT 1
                         )
-                WHEN "USD" THEN 1
+                ELSE (
+                       SELECT cr.rate
+                       FROM currency_rates cr
+                       WHERE cr.currency_iso = transactions.currency_iso
+                       ORDER BY cr.date DESC
+                       LIMIT 1
+                   )
             END) as rate'));
 
         return $query;

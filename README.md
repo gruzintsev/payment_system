@@ -42,16 +42,20 @@ $ cd 'your_projects_directory'
 $ git clone git@github.com:gruzintsev/payment_system.git
 $ cd payment_system
 $ composer install
-$ Настроить .env
+$ Настроить .env . Установить APP_URL. 
 $ ./vendor/bin/sail up -d
-$ sail exec laravel.test php artisan migrate
-$ sail exec laravel.test php artisan db:seed
-$ sail exec laravel.test php artisan passport:install --force
-$ sail exec laravel.test php artisan storage:link
-$ sail exec laravel.test ./vendor/bin/phpunit 
-$ sail exec laravel.test php artisan transaction:handle - для обработки транзакций. Эту задачу можно поставить срабатывать по крону
-$ sail exec laravel.test php artisan queue:work - для обработки jobs
+$ ./vendor/bin/sail exec laravel.test php artisan key:generate
+$ ./vendor/bin/sail exec laravel.test php artisan migrate
+$ ./vendor/bin/sail exec laravel.test php artisan db:seed
+$ ./vendor/bin/sail exec laravel.test php artisan passport:install --force
+$ ./vendor/bin/sail exec laravel.test php artisan storage:link
+$ ./vendor/bin/sail exec laravel.test ./vendor/bin/phpunit 
+$ ./vendor/bin/sail exec laravel.test php artisan transaction:handle - для обработки транзакций. Эту задачу можно поставить срабатывать по крону
+$ ./vendor/bin/sail exec laravel.test php artisan queue:work - для обработки jobs
 ```
+Иногда возникают проблемы с Permission denied на папку storage. Не успел разобраться как лучше настроить. 
+Временно можно выполнить комманду
+`./vendor/bin/sail exec laravel.test chmod -R 777 storage/`
 
 ## Test result
 

@@ -50,12 +50,9 @@
                 @endphp
                 @foreach ($transactions as $transaction)
                     @php
-                        if ((int)$transaction->rate) {
+                        if ($transaction->rate > 0) {
                             $amountUsd = round($transaction->amount / $transaction->rate, 2);
                             $totalAmountUsd += $amountUsd;
-                        } else {
-                            $amountUsd = '?';
-                            $totalAmountUsd = '?';
                         }
                     @endphp
                     <tr class="@if ($transaction->status == \App\Models\Transaction::STATUS_FAIL) bg-danger @endif">
