@@ -25,11 +25,6 @@ class TransactionService
         $this->userService = $userService;
     }
 
-    public function updateStatus(Transaction $transaction, int $status)
-    {
-        $transaction->update(['status' => $status]);
-    }
-
     /**
      * @param Collection $filters
      * @return Builder
@@ -37,6 +32,7 @@ class TransactionService
     public function getQuery(Collection $filters): Builder
     {
         $query = Transaction::query()
+            ->with(['userFrom', 'userTo'])
             ->where(function ($query) use ($filters) {
                 $query->orWhere('transactions.user_from_id', $filters->get('user_id'))
                     ->orWhere('transactions.user_to_id', $filters->get('user_id'));

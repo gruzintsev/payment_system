@@ -31,8 +31,23 @@ class Transaction extends Model
 
     protected $fillable = ['user_from_id', 'user_to_id', 'currency_iso', 'amount', 'status'];
 
+    /**
+     * Получить название статуса
+     * @param int $status
+     * @return string
+     */
     public static function getStatusName(int $status): string
     {
         return self::$statusNames[$status] ?? '';
+    }
+
+    public function userFrom()
+    {
+        return $this->belongsTo(User::class, 'user_from_id');
+    }
+
+    public function userTo()
+    {
+        return $this->belongsTo(User::class, 'user_to_id');
     }
 }

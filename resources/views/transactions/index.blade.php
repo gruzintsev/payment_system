@@ -57,8 +57,8 @@
                     @endphp
                     <tr class="@if ($transaction->status == \App\Models\Transaction::STATUS_FAIL) bg-danger @endif">
                         <td>{{ $transaction->created_at }}</td>
-                        <td>{{ $transaction->user_from_id }}</td>
-                        <td>{{ $transaction->user_to_id }}</td>
+                        <td>{{ $transaction->userFrom->name }}</td>
+                        <td>{{ $transaction->userTo->name }}</td>
                         <td>{{ $transaction->amount }}</td>
                         <td>{{ $transaction->currency_iso }}</td>
                         <td>{{ $amountUsd }}</td>
